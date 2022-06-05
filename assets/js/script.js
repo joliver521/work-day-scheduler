@@ -17,10 +17,20 @@ $('#5Time').attr('timeInfo', moment('5:00 pm', 'h:mm a').format('HH'));
 // JQuery Begins
 $(document).ready(function () {
 
+    // retrieves stored data that was saved in each input
+    let appointments = () => {
+        for (let i = 0; i <= 12; i++) {
+            $('#' + i + 'Time').val(localStorage.getItem(i));
+        }
+    }
+
+    // store input data
+    appointments();
+
     // shows the date and time in the header
     $("#currentDay").append();
 
-    const newDate = () => {
+    let newDate = () => {
         $("#currentDay").html(moment().format('MMMM Do YYYY, h:mm a'));
     }
     setInterval(newDate, 1000);
@@ -41,11 +51,14 @@ $(document).ready(function () {
         }
     }
 
-    // function that operates the saveBtn and triggers data to be stored in local storage
-    saveBtn.on("click", function () {
-        var hour = $(this).attr("data-time"); // reference to the html doc data-time
-        var input = $('#' + hour + 'Time').val(); // saves text inputted into the input column
+    // function to store data in local storage
+    let saveTime = function () {
+        let hour = $(this).attr("data-time"); // reference to the html doc data-time
+        let input = $('#' + hour + 'Time').val(); // saves text inputted into the input column
 
         localStorage.setItem(hour, input); // saves input into local storage
-    });
+    }
+
+    // when locked button is clicked it triggers the saveTime function
+    saveBtn.on("click", saveTime);
 });
