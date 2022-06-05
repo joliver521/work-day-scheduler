@@ -25,10 +25,26 @@ $(document).ready(function () {
     }
     setInterval(newDate, 1000);
 
+    // for loop to change the colors of the row
+    for (let i = 0; i <= 12; i++) {
+        let inputTime = $('#' + i + 'Time').attr('timeInfo');
+        let inputTimeInt = parseInt(inputTime);
+
+        if (currentTimeInt === inputTimeInt) {
+            $('#' + i + 'Time').addClass('present'); // changes row to red
+        }
+        if (currentTimeInt > inputTimeInt) {
+            $('#' + i + 'Time').addClass('past'); // changes row to gray
+        }
+        if (currentTimeInt < inputTimeInt) {
+            $('#' + i + 'Time').addClass('future'); // changes row to green
+        }
+    }
+
     // function that operates the saveBtn and triggers data to be stored in local storage
     saveBtn.on("click", function () {
         var hour = $(this).attr("data-time"); // reference to the html doc data-time
-        var input = $();
+        var input = $('#' + hour + 'Time').val(); // saves text inputted into the input column
 
         localStorage.setItem(hour, input); // saves input into local storage
     });
